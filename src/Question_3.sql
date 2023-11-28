@@ -51,5 +51,3 @@ FROM
     product_details
 GROUP BY 
     sell_date;*/ --This query is Not supported in my system
-
-
