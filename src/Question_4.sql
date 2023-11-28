@@ -29,3 +29,4 @@ Insert into dept_tbl(id_deptname,emp_name,salary) values
 
 select id_deptname , sum(salary) as Total_salary from dept_tbl
 group by id_deptname;
+
