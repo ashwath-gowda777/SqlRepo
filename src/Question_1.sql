@@ -95,9 +95,9 @@ values
 select*from product;
 
 --4.Show all the tables in the same database(ecommerce)
-select TABLE_NAME
-from INFORMATION_SCHEMA.TABLES
-where TABLE_TYPE = 'base table';
+select *
+from INFORMATION_SCHEMA.TABLES;
+
 
 --5.Count all the records of all four tables using single query
 select 'gold_member_users' as Table_Name ,count(*) as Record_Count from gold_member_users 
@@ -123,6 +123,8 @@ Group by s.userid;
 --7.Find the distinct dates of each customer visited the website: output should have 2 columns date and customer name 
 select distinct s.created_date as Date, s.userid as Customer_name
 from sales s;
+
+--select distinct * from sales;
 
 --8.Find the first product purchased by each customer using 3 tables(users, sales, product)
 select u.userid AS Customer_ID, MIN(s.created_date) as First_Purchase, p.product_name as First_Product
@@ -197,19 +199,12 @@ EXEC sp_rename 'gold_member_users', 'gold_membership_users';
 --17.Create a new column  as Status in the table crate above gold_membership_users  the Status values should be 2 Yes and No if the user is gold member, 
 --then status should be Yes else No.
 ALTER TABLE gold_membership_users
-ADD Status VARCHAR(3); -- Adjust the length as per your requirement
-
+ADD Status VARCHAR(3) default 'NO'; -- Adjust the length as per your requirement
 
 UPDATE gold_membership_users
-SET Status = CASE 
-                WHEN EXISTS (
-                    SELECT 1
-                    FROM gold_member_users g
-                    WHERE g.username = gold_membership_users.userid
-                )
-                THEN 'Yes'
-                ELSE 'No'
-            END;
+SET Status = 'Yes'
+
+select*from gold_membership_users;
 
 
 --18.Delete the users_ids 1,2 from users table and roll the back changes once both the rows are deleted one by one mention 
@@ -218,7 +213,7 @@ SET Status = CASE
 BEGIN TRANSACTION;
 
 -- Deleting the user with userid 1
-DELETE FROM users WHERE userid = '1';
+DELETE FROM users WHERE userid = 'John';
 SELECT * FROM users; -- Check the users table after the first deletion
 
 -- Rollback the transaction after the first deletion
@@ -229,7 +224,7 @@ SELECT * FROM users; -- Check the users table after rollback
 BEGIN TRANSACTION;
 
 -- Deleting the user with userid 2
-DELETE FROM users WHERE userid = '2';
+DELETE FROM users WHERE userid = 'Michel';
 SELECT * FROM users; -- Check the users table after the second deletion
 
 -- Rollback the transaction after the second deletion
@@ -244,6 +239,7 @@ SELECT product_id, product_name, price_value
 FROM product
 WHERE product_id = 3; -- Assuming the product_id 3 is the record you want to duplicate
 
+--select*from product
 
 --20.Write a query to find the duplicates in product table
 SELECT product_name, COUNT(*) AS duplicate_count
