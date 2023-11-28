@@ -246,6 +246,3 @@ SELECT product_name, COUNT(*) AS duplicate_count
 FROM product
 GROUP BY product_name
 HAVING COUNT(*) > 1;
-
-
-
