@@ -42,4 +42,3 @@ Update email_signup
 set signup_date = coalesce(signup_date, '1970-01-01')
 
 select*from email_signup;
-
