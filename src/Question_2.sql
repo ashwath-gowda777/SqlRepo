@@ -59,4 +59,3 @@ FROM persons
 WHERE city = 'Mumbai';
 
 select*from Mumbai_View;
-
